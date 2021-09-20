@@ -1,5 +1,5 @@
 # AplikasiLocalStorage
-Tugas 1 Pemrograman Mobile Lanjutan 2021
+Tugas 1 Pemrograman Mobile Lanjut 2021
 
 App Title : Tasks Management
 
