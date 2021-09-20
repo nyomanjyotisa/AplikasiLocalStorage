@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Local Storage App</string>
+    <string name="new_file">New File</string>
+    <string name="open_file">Open File</string>
+    <string name="save_file">Save</string>
+    <string name="title">File Name</string>
+    <string name="content_hint">Write your content here...</string>
+</resources>
