@@ -13,7 +13,8 @@ import java.io.OutputStreamWriter;
 public class FileHelper {
     static void writeToFile(String filename, String data, String deadline,Context context) {
         try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput(filename, Context.MODE_PRIVATE));
+            OutputStreamWriter outputStreamWriter =
+                    new OutputStreamWriter(context.openFileOutput(filename, Context.MODE_PRIVATE));
             outputStreamWriter.write(data);
             outputStreamWriter.write("#");
             outputStreamWriter.write(deadline);
@@ -25,9 +26,7 @@ public class FileHelper {
     }
 
     static String readFromFile(Context context,String filename) {
-
         String ret = "";
-
         try {
             InputStream inputStream = context.openFileInput(filename);
 
@@ -50,7 +49,6 @@ public class FileHelper {
         } catch (IOException e) {
             Log.e("login activity", "Can not read file: " + e.toString());
         }
-
         return ret;
     }
 }

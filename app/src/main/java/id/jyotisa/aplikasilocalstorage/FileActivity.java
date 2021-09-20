@@ -137,7 +137,8 @@ public class FileActivity extends AppCompatActivity implements View.OnClickListe
             String text = editContent.getText().toString();
             String deadline = tvDateResult.getText().toString();
             FileHelper.writeToFile(title, text, deadline, this);
-            Toast.makeText(this, "Saving " + editTitle.getText().toString() + " file", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Saving " + editTitle.getText().toString() + " file",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 }
