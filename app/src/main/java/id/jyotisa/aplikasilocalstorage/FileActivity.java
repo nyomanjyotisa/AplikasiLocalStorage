@@ -3,20 +3,31 @@ package id.jyotisa.aplikasilocalstorage;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.StringTokenizer;
 
 public class FileActivity extends AppCompatActivity implements View.OnClickListener {
     Button btnNew, btnOpen, btnSave;
     EditText editContent, editTitle;
     File path;
+    private DatePickerDialog datePickerDialog;
+    private SimpleDateFormat dateFormatter;
+    private TextView tvDateResult;
+    private Button btDatePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +44,33 @@ public class FileActivity extends AppCompatActivity implements View.OnClickListe
         btnOpen.setOnClickListener(this);
         btnSave.setOnClickListener(this);
         path = getFilesDir();
+
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+
+        tvDateResult = (TextView) findViewById(R.id.tv_dateresult);
+        btDatePicker = (Button) findViewById(R.id.bt_datepicker);
+        btDatePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDateDialog();
+            }
+        });
+    }
+
+    private void showDateDialog(){
+        Calendar newCalendar = Calendar.getInstance();
+
+        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+
+                tvDateResult.setText(dateFormatter.format(newDate.getTime()));
+            }
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
     }
 
     @Override
@@ -54,14 +92,21 @@ public class FileActivity extends AppCompatActivity implements View.OnClickListe
     public void newFile() {
         editTitle.setText("");
         editContent.setText("");
+        tvDateResult.setText("Select deadline");
 
         Toast.makeText(this, "Clearing file", Toast.LENGTH_SHORT).show();
     }
 
     private void loadData(String title) {
         String text = FileHelper.readFromFile(this, title);
+
+        StringTokenizer tokens = new StringTokenizer(text, "#");
+        String savedTitle = tokens.nextToken();
+        String savedDeadline = tokens.nextToken();
+
         editTitle.setText(title);
-        editContent.setText(text);
+        editContent.setText(savedTitle);
+        tvDateResult.setText(savedDeadline);
         Toast.makeText(this, "Loading " + title + " data", Toast.LENGTH_SHORT).show();
     }
 
@@ -90,7 +135,8 @@ public class FileActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             String title = editTitle.getText().toString();
             String text = editContent.getText().toString();
-            FileHelper.writeToFile(title, text, this);
+            String deadline = tvDateResult.getText().toString();
+            FileHelper.writeToFile(title, text, deadline, this);
             Toast.makeText(this, "Saving " + editTitle.getText().toString() + " file", Toast.LENGTH_SHORT).show();
         }
     }

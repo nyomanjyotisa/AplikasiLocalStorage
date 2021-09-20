@@ -11,10 +11,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 public class FileHelper {
-    static void writeToFile(String filename, String data, Context context) {
+    static void writeToFile(String filename, String data, String deadline,Context context) {
         try {
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput(filename, Context.MODE_PRIVATE));
             outputStreamWriter.write(data);
+            outputStreamWriter.write("#");
+            outputStreamWriter.write(deadline);
             outputStreamWriter.close();
         }
         catch (IOException e) {

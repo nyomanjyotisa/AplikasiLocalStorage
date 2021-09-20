@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Local Storage App</string>
-    <string name="new_file">New File</string>
-    <string name="open_file">Open File</string>
+    <string name="app_name">Tasks Management</string>
+    <string name="new_file">New Task</string>
+    <string name="open_file">Open Task</string>
     <string name="save_file">Save</string>
-    <string name="title">File Name</string>
-    <string name="content_hint">Write your content here...</string>
+    <string name="title">Task Name</string>
+    <string name="content_hint">Write your task description here...</string>
 </resources>
